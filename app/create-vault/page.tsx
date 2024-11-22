@@ -195,11 +195,13 @@ const CreateVault = () => {
         </div>
         {url && (
           <div className="col-span-1 md:col-span-2 bg-white dark:bg-[#1A202C] p-5 rounded-lg shadow-lg text-center">
-            <span className="font-semibold text-xl">http://localhost:3000/api?id={url}</span>
+            <span className="font-semibold text-xl">
+              https://solanablinks.me/api?id={url}
+            </span>
             <button
               onClick={() => {
                 navigator.clipboard.writeText(
-                  `https://solanablinks.me/api?id=${url}`,
+                  `https://solanablinks.me/api?id=${url}`
                 );
                 alert("URL copied to clipboard!");
               }}
