@@ -15,7 +15,7 @@ const FormField = ({
   type?: string;
   value: string | number;
   onChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void;
   rows?: number;
 }) => {
@@ -26,7 +26,7 @@ const FormField = ({
         className="block mb-2 text-navy-800 dark:text-gold-100"
       >
         {label}
-      </label>
+      </label>{" "}
       {type === "textarea" ? (
         <textarea
           id={id}
@@ -64,7 +64,7 @@ const CreateVault = () => {
   });
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { id, value } = e.target;
     setFormData({
@@ -199,7 +199,7 @@ const CreateVault = () => {
             <button
               onClick={() => {
                 navigator.clipboard.writeText(
-                  `http://localhost:3000/api?id=${url}`
+                  `https://solanablinks.me/api?id=${url}`,
                 );
                 alert("URL copied to clipboard!");
               }}
