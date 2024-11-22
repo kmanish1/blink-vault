@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export const Hero: React.FC = () => {
   return (
     <div className="dark:bg-[#2D3748] min-h-[600px] flex items-center">
@@ -9,10 +11,13 @@ export const Hero: React.FC = () => {
           Securely vault your posts and share them with a price tag.
         </p>
         <div className="space-x-4">
-          <button className="px-6 py-3 rounded-lg transition">
-            Create Your Vault
-          </button>
-          <button className="border-2 border-navy-500 text-navy-500 px-6 py-3 rounded-lg hover:bg-navy-100 transition">
+          <Link
+            href="/create-vault"
+            className="hover:text-navy-600 dark:hover:dark:text-gray-100 transition"
+          >
+            Create Vault
+          </Link>
+          <button className="border-2 border-navy-500 text-navy-500 px-6 py-3 rounded-lg transition">
             Learn More
           </button>
         </div>
