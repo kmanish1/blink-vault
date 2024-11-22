@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import dbConnect from "../lib/dbConnect";
+import Vault from "../model/Vault";
 
 const FormField = ({
   id,
@@ -72,19 +74,49 @@ const CreateVault = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     console.log("Form Data Submitted:", formData);
-    setFormData({
-      outerTitle: "",
-      outerContent: "",
-      outerImageLink: "",
-      outerPrice: 0,
-      innerTitle: "",
-      innerContent: "",
-      innerImageLink: "",
-      walletAddress: "",
-    });
+
+    try {
+      // Send form data to the backend (API route)
+      const response = await fetch("/api/vault", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData), // Send the form data as JSON
+      });
+
+      // Handle response from the server
+      if (!response.ok) {
+        throw new Error("Failed to submit form data");
+      }
+
+      // Parse the JSON response
+      const data = await response.json();
+      console.log(data.message); // Log success message
+
+      // Reset the form fields after successful submission
+      setFormData({
+        outerTitle: "",
+        outerContent: "",
+        outerImageLink: "",
+        outerPrice: 0,
+        innerTitle: "",
+        innerContent: "",
+        innerImageLink: "",
+        walletAddress: "",
+      });
+
+      // Show success message to the user
+      console.log("Vault created successfully!");
+    } catch (error) {
+      // Log the error and display failure message
+      console.error("Error submitting form:", error);
+      alert("An error occurred while submitting the form.");
+    }
   };
 
   return (
