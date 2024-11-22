@@ -1,20 +1,17 @@
-import {
-  
-  ActionsJson,
-  createActionHeaders,
-} from "@solana/actions";
+import { ActionsJson, createActionHeaders } from "@solana/actions";
 
 export const GET = async () => {
   const payload: ActionsJson = {
     rules: [
+      // map all root level routes to an action
       {
-        pathPattern: "/",
-        apiPath: "/api/",
+        pathPattern: "/*",
+        apiPath: "/*",
       },
-      // fallback route
+      // idempotent rule as the fallback
       {
-        pathPattern: "/api/**",
-        apiPath: "/api/",
+        pathPattern: "/**",
+        apiPath: "/**",
       },
     ],
   };
@@ -23,5 +20,5 @@ export const GET = async () => {
     headers: createActionHeaders(),
   });
 };
-// ensures cors
+
 export const OPTIONS = GET;
