@@ -13,26 +13,32 @@ import {
   SystemProgram,
   Transaction,
 } from "@solana/web3.js";
+import dbConnect from "../lib/dbConnect";
+import Vault from "../model/Vault";
 
 const headers = createActionHeaders();
-
+export async function getData(id:any){
+  await dbConnect();
+  const data = Vault.findOne({_id:id})
+  return data;
+}
 export async function GET(req: Request) {
   const url = new URL(req.url);
   const id = url.searchParams.get("id")!;
 
-  // const data = await getData(id)
+  const data = await getData(id)
   const payload: ActionGetResponse = {
     type: "action",
-    title: "",
-    description: "",
-    icon: "",
+    title: data.outerTitle,
+    description: data.outerContent,
+    icon: data.outerImageLink,
     label: "",
     links: {
       actions: [
         {
           type: "post",
-          href: `/api?id=${id}`,
-          label: "",
+          href: `/api?id=${id}&to=${data.walletAddress}&price=${data.outerPrice}`,
+          label: `Pay ${data.outerPrice} sol`,
         },
       ],
     },

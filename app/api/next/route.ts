@@ -5,6 +5,7 @@ import {
   CompletedAction,
 } from "@solana/actions";
 import { clusterApiUrl, Connection, PublicKey } from "@solana/web3.js";
+import { getData } from "../route";
 const headers = createActionHeaders();
 
 export const GET = async (req: Request) => {
@@ -61,14 +62,14 @@ export const POST = async (req: Request) => {
 
     const id = url.searchParams.get("id")!;
 
-    // const data = await getData(id);
+    const data = await getData(id);
 
     const payload: CompletedAction = {
       type: "completed",
-      title: "",
-      icon: "",
+      title: data.innerTitle,
+      icon: data.innerImageLink,
       label: "Complete!",
-      description: "",
+      description: data.innerContent,
     };
 
     return Response.json(payload, {

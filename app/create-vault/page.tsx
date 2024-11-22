@@ -36,7 +36,7 @@ const FormField = ({
           value={value}
           onChange={onChange}
           rows={rows || 4}
-          className="w-full px-4 py-2 rounded-lg border border-navy-200 dark:border-navy-600 dark:bg-navy-700 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gold-500"
+          className="w-full px-4 py-2 rounded-lg border border-navy-200 text-navy-800 dark:border-navy-600 dark:bg-navy-700  focus:outline-none focus:ring-2 focus:ring-gold-500"
         />
       ) : (
         <input
@@ -45,7 +45,7 @@ const FormField = ({
           required
           value={value}
           onChange={onChange}
-          className="w-full px-4 py-2 rounded-lg border border-navy-200 dark:border-navy-600 dark:bg-navy-700 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gold-500"
+          className="w-full px-4 py-2 rounded-lg border border-navy-200 text-navy-800 dark:border-navy-600 dark:bg-navy-700  focus:outline-none focus:ring-2 focus:ring-gold-500"
         />
       )}
     </div>
@@ -53,6 +53,7 @@ const FormField = ({
 };
 
 const CreateVault = () => {
+  const [url, setUrl] = useState(null);
   const [formData, setFormData] = useState({
     outerTitle: "",
     outerContent: "",
@@ -77,8 +78,6 @@ const CreateVault = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log("Form Data Submitted:", formData);
-
     try {
       // Send form data to the backend (API route)
       const response = await fetch("/api/vault", {
@@ -96,7 +95,7 @@ const CreateVault = () => {
 
       // Parse the JSON response
       const data = await response.json();
-      console.log(data.message); // Log success message
+      setUrl(data.x._id); // Log success message
 
       // Reset the form fields after successful submission
       setFormData({
@@ -196,12 +195,27 @@ const CreateVault = () => {
             onChange={handleInputChange}
           />
         </div>
-
+        {url && (
+          <div>
+            <span>http://localhost:3000/api?id={url}</span>
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  `http://localhost:3000/api?id=${url}`
+                );
+                alert("URL copied to clipboard!");
+              }}
+              className="ml-2 px-3 py-1 bg-navy-800 text-white rounded-lg hover:bg-navy-600"
+            >
+              Copy
+            </button>
+          </div>
+        )}
         {/* Submit Button */}
-        <div className="col-span-1 md:col-span-2 text-center">
+        <div className="col-span-1 md:col-span-2 text-center w-full">
           <button
             type="submit"
-            className="w-full bg-navy-800 text-white py-2 px-4 rounded-lg hover:bg-gold-600 focus:outline-none"
+            className=" bg-[#1A202C] text-white py-2 px-4 rounded-lg hover:bg-gold-600 focus:outline-none"
           >
             Submit
           </button>

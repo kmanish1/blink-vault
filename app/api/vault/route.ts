@@ -7,8 +7,9 @@ export async function POST(request: Request) {
     const formData = await request.json();
     await dbConnect();
     const newVault = new Vault(formData);
-    await newVault.save();
-    return NextResponse.json({ message: "Vault created successfully!" });
+     const x = await newVault.save();
+     console.log(x)
+    return NextResponse.json({ x});
   } catch (error) {
     console.error("Error creating vault:", error);
     return NextResponse.json(

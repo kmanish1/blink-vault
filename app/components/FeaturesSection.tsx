@@ -30,7 +30,7 @@ export const FeaturesSection: React.FC = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="max-w-xs p-6 rounded-lg shadow-lg"
+              className="max-w-xs p-6 rounded-lg shadow-lg dark:bg-[#1A202C]"
             >
               <div className=" mb-4">{feature.icon}</div>
               <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
