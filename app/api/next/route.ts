@@ -22,17 +22,20 @@ export const POST = async (req: Request) => {
     const url = new URL(req.url);
 
     const body: NextActionPostRequest = await req.json();
- 
+
     let signature: string;
     try {
       signature = body.signature!;
       if (!signature) throw "Invalid signature";
     } catch (err) {
-      console.log(err)
+      console.log(err);
       throw 'Invalid "signature" provided';
     }
 
-    const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
+    const connection = new Connection(
+      clusterApiUrl("mainnet-beta"),
+      "confirmed",
+    );
     try {
       const status = await connection.getSignatureStatus(signature);
 

@@ -13,7 +13,7 @@ import {
   SystemProgram,
   Transaction,
 } from "@solana/web3.js";
- 
+
 import { getData } from "./func";
 
 const headers = createActionHeaders();
@@ -22,7 +22,7 @@ export async function GET(req: Request) {
   const url = new URL(req.url);
   const id = url.searchParams.get("id")!;
 
-  const data = await getData(id)
+  const data = await getData(id);
   const payload: ActionGetResponse = {
     type: "action",
     title: data.outerTitle,
@@ -57,7 +57,7 @@ export async function POST(req: Request) {
     const body: ActionPostRequest = await req.json();
     const account = new PublicKey(body.account);
 
-    const connection = new Connection(clusterApiUrl("devnet"));
+    const connection = new Connection(clusterApiUrl("mainnet-beta"));
 
     const { blockhash, lastValidBlockHeight } =
       await connection.getLatestBlockhash();
