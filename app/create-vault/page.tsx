@@ -148,7 +148,7 @@ const CreateVault = () => {
           />
           <FormField
             id="outerPrice"
-            label="Price"
+            label="Price(in sol)"
             type="number"
             value={formData.outerPrice}
             onChange={handleInputChange}
@@ -194,8 +194,8 @@ const CreateVault = () => {
           />
         </div>
         {url && (
-          <div>
-            <span>http://localhost:3000/api?id={url}</span>
+          <div className="col-span-1 md:col-span-2 bg-white dark:bg-[#1A202C] p-5 rounded-lg shadow-lg text-center">
+            <span className="font-semibold text-xl">http://localhost:3000/api?id={url}</span>
             <button
               onClick={() => {
                 navigator.clipboard.writeText(
