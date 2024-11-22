@@ -13,15 +13,11 @@ import {
   SystemProgram,
   Transaction,
 } from "@solana/web3.js";
-import dbConnect from "../lib/dbConnect";
-import Vault from "../model/Vault";
+ 
+import { getData } from "./func";
 
 const headers = createActionHeaders();
-export async function getData(id:any){
-  await dbConnect();
-  const data = Vault.findOne({_id:id})
-  return data;
-}
+
 export async function GET(req: Request) {
   const url = new URL(req.url);
   const id = url.searchParams.get("id")!;

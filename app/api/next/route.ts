@@ -5,10 +5,10 @@ import {
   CompletedAction,
 } from "@solana/actions";
 import { clusterApiUrl, Connection, PublicKey } from "@solana/web3.js";
-import { getData } from "../route";
+import { getData } from "../func";
 const headers = createActionHeaders();
 
-export const GET = async (req: Request) => {
+export const GET = async () => {
   return Response.json({ message: "Method not supported" } as ActionError, {
     status: 403,
     headers,
@@ -22,25 +22,19 @@ export const POST = async (req: Request) => {
     const url = new URL(req.url);
 
     const body: NextActionPostRequest = await req.json();
-
-    let account: PublicKey;
-    try {
-      account = new PublicKey(body.account);
-    } catch (err) {
-      throw 'Invalid "account" provided';
-    }
-
+ 
     let signature: string;
     try {
       signature = body.signature!;
       if (!signature) throw "Invalid signature";
     } catch (err) {
+      console.log(err)
       throw 'Invalid "signature" provided';
     }
 
     const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
     try {
-      let status = await connection.getSignatureStatus(signature);
+      const status = await connection.getSignatureStatus(signature);
 
       console.log("signature status:", status);
 
@@ -56,6 +50,7 @@ export const POST = async (req: Request) => {
         }
       }
     } catch (err) {
+      console.log(err);
       if (typeof err == "string") throw err;
       throw "Unable to confirm the provided signature";
     }
@@ -77,7 +72,7 @@ export const POST = async (req: Request) => {
     });
   } catch (err) {
     console.log(err);
-    let actionError: ActionError = { message: "An unknown error occurred" };
+    const actionError: ActionError = { message: "An unknown error occurred" };
     if (typeof err == "string") actionError.message = err;
     return Response.json(actionError, {
       status: 400,

@@ -1,5 +1,5 @@
 import {
-  ACTIONS_CORS_HEADERS,
+  
   ActionsJson,
   createActionHeaders,
 } from "@solana/actions";
